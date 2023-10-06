@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name="seldoncore_huggingface_diffusion",
     version="1.0.0",
-    description="Tegaki Model Service",
+    description="HuggingFace Diffusion on Seldon Core",
     author="Sho Akiyama",
     author_email="akiyamashou@protonmail.com",
     packages=find_packages(),
@@ -12,6 +12,8 @@ setup(
         "diffusers==0.21.4",
         "safetensors==0.4.0",
         "transformers==4.25.1",
+        "seldon-core==1.17.1",
+        "pillow==10.0.1",
     ],
     extras_require={
         "dev": [
