@@ -1,0 +1,4 @@
+artifacts
+env
+*.egg-info
+build

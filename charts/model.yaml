@@ -1,0 +1,17 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: stable-diffusion-hf
+  namespace: diffusion
+spec:
+  name: diffusion
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - name: diffusion
+          image: diffusion:0.1
+    graph:
+      name: diffusion
+    name: default
+    replicas: 1
