@@ -10,7 +10,7 @@ spec:
     - spec:
         containers:
         - name: diffusion
-          image: diffusion:0.1
+          image: <repository URL>/diffusion:v0.1
     graph:
       name: diffusion
     name: default
