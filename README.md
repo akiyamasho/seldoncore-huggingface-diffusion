@@ -36,22 +36,57 @@
         --name $CLUSTER_NAME
     ```
 
+### Local Model Setup
+
+1. Create a folder named `artifacts`
+
+    ```bash
+    mkdir artifacts
+    ```
+
+1. Rename your Stable Diffusion to `model.safetensors` and move it to `artifacts`
+
 ### Seldon Core Setup
 
-1. Install Seldon Core
+1. Build and push the model image to your container registry
 
-```
-kubectl create namespace seldon-system
+    ```bash
+    CONTAINER_REGISTRY_URL=<your container registry URL>
+    CONTAINER_URL=$CONTAINER_REGISTRY_URL/diffusion:v1.0
 
-helm install seldon-core seldon-core-operator \
-    --repo https://storage.googleapis.com/seldon-charts \
-    --set usageMetrics.enabled=true \
-    --namespace seldon-system \
-    --set istio.enabled=true
-```
+    docker build . -t $CONTAINER_URL
+    docker push $CONTAINER_URL
+    ```
 
-2. Create the model namespace
+    NOTE: If you get a `cannot connect to the Docker Daemon` error, you may need to specify your Docker socket to `s2i` using the `-U` . ex. `-U unix:///Users/computer/.docker/run/docker.sock`
 
-```
-kubectl create namespace diffusion
-```
+1. Install Seldon Core on your cluster
+
+    ```
+    kubectl create namespace seldon-system
+
+    helm install seldon-core seldon-core-operator \
+        --repo https://storage.googleapis.com/seldon-charts \
+        --set usageMetrics.enabled=true \
+        --namespace seldon-system
+    ```
+
+1. Create the model namespace
+
+    ```
+    kubectl create namespace diffusion
+    ```
+
+1. Update the `<repository URL>` in `charts/model.yaml`
+
+    ```
+    containers:
+        - name: diffusion
+          image: <repository URL>/diffusion:v0.1
+    ```
+
+1. Apply the charts
+
+    ```
+    kubectl apply -f charts/model.yaml
+    ```
