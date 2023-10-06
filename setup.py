@@ -14,6 +14,7 @@ setup(
         "transformers==4.25.1",
         "seldon-core==1.17.1",
         "pillow==10.0.1",
+        "omegaconf==2.3.0",
     ],
     extras_require={
         "dev": [
