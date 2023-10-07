@@ -11,7 +11,7 @@ setup(
         "torch==1.13.1",
         "diffusers==0.21.4",
         "safetensors==0.4.0",
-        "transformers==4.25.1",
+        "transformers==4.30.0",
         "seldon-core==1.17.1",
         "pillow==10.0.1",
         "omegaconf==2.3.0",
